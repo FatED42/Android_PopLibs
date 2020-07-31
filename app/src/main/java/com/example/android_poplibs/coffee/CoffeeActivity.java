@@ -8,8 +8,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.android_poplibs.R;
 
+import butterknife.OnClick;
 import io.reactivex.Observable;
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 
@@ -29,33 +29,15 @@ public class CoffeeActivity extends AppCompatActivity {
         observable = presenter.getCupOfCoffee();
     }
 
+    @OnClick(R.id.subCoffeeBtn)
     public void subscribe(View view) {
-        observable.observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<String>() {
-
-            @Override
-            public void onSubscribe(Disposable disposable) {
-                Log.d(TAG, "onSubscribe: ");
-                CoffeeActivity.this.disposable = disposable;
-            }
-
-            @Override
-            public void onNext(String s) {
-                Log.d(TAG, "onNext: " + Thread.currentThread().getName() + ": " + s);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Log.e(TAG, "onError: " + e);
-            }
-
-            @Override
-            public void onComplete() {
-                Log.d(TAG, "onComplete: ");
-            }
-        });
-        Log.d(TAG, "subscribe: end " + Thread.currentThread().getName());
+        disposable = observable.observeOn(AndroidSchedulers.mainThread()).subscribe(
+                string -> Log.d(TAG, "onNext: " + string),
+                throwable -> Log.e(TAG, "onError: "),
+                () -> Log.d(TAG, "onComplete: "));
     }
 
+    @OnClick(R.id.unsubscribeCoffeeBtn)
     public void unsubscribe(View view) {
         disposable.dispose();
     }

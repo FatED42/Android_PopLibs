@@ -14,33 +14,37 @@ import com.example.android_poplibs.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import moxy.MvpAppCompatActivity;
+import moxy.presenter.InjectPresenter;
+import moxy.presenter.ProvidePresenter;
 
-public class RetrofitActivity extends AppCompatActivity {
+public class RetrofitActivity extends MvpAppCompatActivity implements RetrofitView {
 
     @BindView(R.id.imageView)
     ImageView imageView;
 
     private static final String TAG = "RetrofitActivity";
 
-    private RetrofitPresenter retrofitPresenter;
+    @InjectPresenter
+    RetrofitPresenter retrofitPresenter;
+
+    @ProvidePresenter
+    public RetrofitPresenter providePresenter() {
+        return new RetrofitPresenter();
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_retrofit);
         ButterKnife.bind(this);
-
-        retrofitPresenter = new RetrofitPresenter();
     }
 
-    @OnClick(R.id.retrofitBtn)
-    public void onClickButton(View view) {
-        Log.d(TAG, "onClickButton: ");
-        retrofitPresenter.getString();
-
+    @Override
+    public void showPhoto(String avatarUrl) {
         Glide
                 .with(this)
-                .load("https://avatars0.githubusercontent.com/u/66577?v=4")
+                .load(avatarUrl)
                 .into(imageView);
     }
 }

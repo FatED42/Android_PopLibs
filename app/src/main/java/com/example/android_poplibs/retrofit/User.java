@@ -11,4 +11,8 @@ public class User {
     @Expose
     @SerializedName("company")
     public String company;
+
+    @Expose
+    @SerializedName("avatar_url")
+    public String avatarUrl;
 }

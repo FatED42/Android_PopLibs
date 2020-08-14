@@ -5,8 +5,10 @@ import android.util.Log;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import moxy.InjectViewState;
 import moxy.MvpPresenter;
 
+@InjectViewState
 public class RetrofitPresenter extends MvpPresenter<RetrofitView> {
 
     private static final String TAG = "RetrofitPresenter";

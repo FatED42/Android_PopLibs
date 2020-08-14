@@ -10,10 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".gson.GsonActivity">
-
-        </activity>
-        <activity android:name=".retrofit.RetrofitActivity">
+        <activity android:name=".espresso.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
